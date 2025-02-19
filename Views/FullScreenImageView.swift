@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct FullScreenImageView: View {
+    @EnvironmentObject var favoritesManager: FavoritesManager
     let image: UnsplashImage
 
     var body: some View {
@@ -15,6 +16,14 @@ struct FullScreenImageView: View {
             Text("Photo by \(image.user.name)")
                 .font(.headline)
                 .padding()
+
+            Button(action: {
+                favoritesManager.toggleFavorite(image: image)
+            }) {
+                Image(systemName: favoritesManager.isFavorite(image: image) ? "heart.fill" : "heart")
+                    .foregroundColor(.red)
+                    .padding()
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
     }
